@@ -1,24 +1,22 @@
 import { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
-import { useNavigatem Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const CREATE_USER = gql`
   mutation CreateUser($username: String!, $password: String!) {
-    registerUser(username: $username, password: $password) {
-      id
-      username
-    }
+    registerUser(username: $username, password: $password)
   }
 `;
 
 function CreateAccount() {
+  document.title = 'Create Account | Private Events';
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const [createUser, { loading, error }] = useMutation(CREATE_USER, {
     onCompleted: (data) => {
-      console.log(data);
+      localStorage.setItem('ACCESS_TOKEN', data.registerUser);
       navigate('/');
     },
   });
@@ -29,7 +27,14 @@ function CreateAccount() {
   };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (error) {
+    if (
+      error.message ===
+      'duplicerat nyckelvärde bryter mot unik-villkor "Users_username_key"'
+    )
+      return <p>Username already exists</p>;
+    else return <p>{error.message}</p>;
+  }
 
   return (
     <div>
@@ -65,9 +70,9 @@ function CreateAccount() {
           Create Account
         </button>
         <p className="text-center my-3">
-          Do you not have an account?
-          <Link to="/create-account" className="mt-3">
-            Create one here.
+          Already have an account?
+          <Link to="/login" className="mt-3">
+            Log in
           </Link>
         </p>
       </form>

@@ -31,6 +31,5 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'import/no-named-as-default-member': 'off',
-    'react/no-unescaped-entities': 'off',
   },
 };

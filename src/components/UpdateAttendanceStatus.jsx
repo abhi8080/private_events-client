@@ -25,14 +25,14 @@ function UpdateAttendanceStatus({ eventId, isAttendee }) {
           Unattend
         </button>
       ) : (
-        <div
+        <button
           onClick={() => {
             updateEventAttendance({ variables: { eventId, status: 'ATTEND' } });
           }}
           className="btn btn-success"
         >
           Attend
-        </div>
+        </button>
       )}
     </>
   );

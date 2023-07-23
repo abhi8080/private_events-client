@@ -25,7 +25,7 @@ test('a user can attend the event', async ({ page }) => {
 
   await page.waitForURL('http://localhost:5173/events/1');
 
-  await page.getByText('Attend', { exact: true }).click();
+  await page.getByRole('button', { name: 'Attend' }).click();
 
   expect(page.getByText('testusername2')).toBeDefined();
 });

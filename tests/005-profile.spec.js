@@ -66,6 +66,8 @@ test('an attendee can unattend an event', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Back' }).click();
 
+  await page.waitForTimeout(1000);
+
   const futureAttendedEvents = await page.$(
     'p:has-text("No future attended events")',
   );

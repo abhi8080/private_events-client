@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { GET_USER } from '../queries/userQueries';
 
 function Profile() {
+  document.title = 'Profile | Private Events';
   const navigate = useNavigate();
   const { loading, error, data } = useQuery(GET_USER);
 

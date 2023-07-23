@@ -9,6 +9,7 @@ const LOGIN_USER = gql`
 `;
 
 function Login() {
+  document.title = 'Log In | Private Events';
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

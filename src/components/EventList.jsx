@@ -4,6 +4,7 @@ import CreateEvent from './CreateEvent';
 import { GET_EVENTS } from '../queries/eventQueries';
 
 function EventList() {
+  document.title = 'Home | Private Events';
   const navigate = useNavigate();
   const { loading, error, data } = useQuery(GET_EVENTS);
 

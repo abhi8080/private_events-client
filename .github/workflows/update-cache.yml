@@ -1,0 +1,56 @@
+name: Update Caches
+
+on:
+  push:
+    branches: ['master']
+
+jobs:
+  update-cache:
+    name: Update Cache
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project:
+          [
+            { name: edge, browser: chromium },
+            { name: chrome, browser: chromium },
+            { name: firefox, browser: firefox },
+            { name: safari, browser: webkit },
+          ]
+
+    steps:
+      - name: Checkout the Frontend
+        uses: actions/checkout@v3
+        with:
+          path: frontend
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
+        working-directory: ./frontend
+
+      - name: Cache playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: |
+            /home/runner/.cache/ms-playwright
+          key: ${{ runner.os }}-${{ matrix.project.name }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Install Frontend Dependencies
+        run: npm ci
+        working-directory: ./frontend
+
+      # Installs binaries and system dependencies for playwright unless it's found in  cache
+      - name: Install Playwright Dependencies and Binaries
+        run: npx playwright install --with-deps ${{ matrix.project.browser }}
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        working-directory: ./frontend

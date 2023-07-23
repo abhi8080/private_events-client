@@ -1,0 +1,124 @@
+name: Node Continuous Integration
+
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  static_analyzing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: npm ci
+      - name: Run ESLint
+        run: npm run lint
+
+  acceptance_test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project:
+          [
+            { name: edge, browser: chromium, port: 5001 },
+            { name: chrome, browser: chromium, port: 5002 },
+            { name: firefox, browser: firefox, port: 5003 },
+            { name: safari, browser: webkit, port: 5004 },
+          ]
+
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          PGUSER: postgres
+          POSTGRES_DB: ${{ matrix.project.name }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout the Backend
+        uses: actions/checkout@v3
+        with:
+          repository: abhi8080/private_events-server
+          ref: master
+          path: backend
+
+      - name: Checkout the Frontend
+        uses: actions/checkout@v3
+        with:
+          path: frontend
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install Backend Dependencies
+        run: npm ci
+        working-directory: ./backend
+
+      - name: Start Backend
+        run: npm run start&
+        env:
+          DATABASE_HOST: localhost
+          DATABASE_PORT: 5432
+          DATABASE_USERNAME: postgres
+          DATABASE_PASSWORD: postgres
+          DATABASE_ACC_NAME: ${{ matrix.project.name }}
+          DATABASE_DIALECT: postgres
+          PORT: ${{ matrix.project.port }}
+          JWT_SECRET: thisisasecret
+          NODE_ENV: acctest
+        working-directory: ./backend
+
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
+        working-directory: ./frontend
+
+      - name: Cache playwright binaries
+        uses: actions/cache/restore@v3
+        id: playwright-cache
+        with:
+          path: |
+            /home/runner/.cache/ms-playwright
+          key: ${{ runner.os }}-${{ matrix.project.name }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Install Frontend Dependencies
+        run: npm ci
+        working-directory: ./frontend
+
+      # Installs binaries and system dependencies for playwright unless it's found in cache
+      - name: Install Playwright Dependencies and Binaries
+        run: npx playwright install --with-deps ${{ matrix.project.browser }}
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        working-directory: ./frontend
+
+      # Installs only system dependencies if binaries were cached
+      - name: Install Only Playwright Dependencies
+        run: npx playwright install-deps ${{ matrix.project.browser }}
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        working-directory: ./frontend
+
+      - name: Run Playwright tests
+        run: npx playwright test --project=${{ matrix.project.name }}
+        env:
+          DEBUG: pw:browser*
+          VITE_BACKEND_PORT: ${{ matrix.project.port }}
+          VITE_BACKEND_HOST: 'localhost'
+        working-directory: ./frontend
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: frontend/playwright-report/
+          retention-days: 30

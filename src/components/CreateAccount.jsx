@@ -30,7 +30,8 @@ function CreateAccount() {
   if (error) {
     if (
       error.message ===
-      'duplicerat nyckelvärde bryter mot unik-villkor "Users_username_key"'
+        'duplicerat nyckelvärde bryter mot unik-villkor "Users_username_key"' ||
+      error.message === 'Validation error'
     )
       return <p>Username already exists</p>;
     else return <p>{error.message}</p>;

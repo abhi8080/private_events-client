@@ -9,9 +9,10 @@ import {
 import './index.css';
 
 import { setContext } from '@apollo/client/link/context';
+import { serverConfig } from './config/server-config.js';
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3000/graphql',
+  uri: serverConfig.BACKEND_BASEURL,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -51,5 +52,5 @@ const client = new ApolloClient({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ApolloProvider client={client}>
     <App />
-  </ApolloProvider>
+  </ApolloProvider>,
 );

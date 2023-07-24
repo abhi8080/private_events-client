@@ -1,5 +1,20 @@
 import { gql } from '@apollo/client';
 
+const CREATE_EVENT = gql`
+  mutation CreateEvent($name: String!, $date: String!, $location: String!) {
+    createEvent(name: $name, date: $date, location: $location) {
+      id
+      name
+      date
+      location
+      creator {
+        id
+        username
+      }
+    }
+  }
+`;
+
 const UPDATE_EVENT = gql`
   mutation UpdateEvent(
     $updateEventId: ID!
@@ -34,4 +49,4 @@ const DELETE_EVENT = gql`
   }
 `;
 
-export { UPDATE_EVENT, DELETE_EVENT, UPDATE_EVENT_ATTENDANCE };
+export { CREATE_EVENT, UPDATE_EVENT, DELETE_EVENT, UPDATE_EVENT_ATTENDANCE };

@@ -1,12 +1,7 @@
 import { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useNavigate, Link } from 'react-router-dom';
-
-const CREATE_USER = gql`
-  mutation CreateUser($username: String!, $password: String!) {
-    registerUser(username: $username, password: $password)
-  }
-`;
+import { CREATE_USER } from '../mutations/userMutations.js';
 
 function CreateAccount() {
   document.title = 'Create Account | Private Events';

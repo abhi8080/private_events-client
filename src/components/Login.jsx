@@ -1,13 +1,7 @@
 import { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useNavigate, Link } from 'react-router-dom';
-
-const LOGIN_USER = gql`
-  mutation LoginUser($username: String!, $password: String!) {
-    loginUser(username: $username, password: $password)
-  }
-`;
-
+import { LOGIN_USER } from '../mutations/userMutations.js';
 function Login() {
   document.title = 'Log In | Private Events';
   const navigate = useNavigate();

@@ -1,0 +1,51 @@
+{
+  "translation": {
+    "Loading": "Loading...",
+    "Back": "Back",
+    "Navbar": {
+      "ChooseLanguage": "Choose language",
+      "Profile": "Profile",
+      "LogOut": "Log out"
+    },
+    "EventList": {
+      "EventList": "Event list",
+      "UpcomingEvents": "Upcoming Events",
+      "PastEvents": "Past Events"
+    },
+    "EventDetails": {
+      "EventDetails": "Event Details",
+      "Date": "Date",
+      "Location": "Location",
+      "Creator": "Creator",
+      "ViewDetails": "View Details",
+      "Attendees": "Attendees"
+    },
+    "CreateEvent": {
+      "AddEvent": "Add Event",
+      "Name": "Name",
+      "Create": "Create"
+    },
+    "EditEvent": {
+      "Edit": "Edit",
+      "EditEvent": "Edit Event",
+      "Submit": "Submit"
+    },
+    "DeleteEvent": {
+      "DeleteEvent": "Delete Event"
+    },
+    "Profile": {
+      "User": "User",
+      "YourEvents": "Your Events",
+      "NoCreatedEvents": "No created events",
+      "PastAttendedEvents": "Past Attended Events",
+      "NoPastAttendedEvents": "No past attended events",
+      "FutureAttendedEvents": "Future Attended Events",
+      "NoFutureAttendedEvents": "No future attended events"
+    },
+
+    "UpdateAttendanceStatus": {
+      "Unattend": "Unattend",
+      "Attend": "Attend"
+    }
+  }
+}

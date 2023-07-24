@@ -2,8 +2,10 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_EVENT_ATTENDANCE } from '../mutations/eventMutations';
 import { GET_EVENT_DETAILS } from '../queries/eventQueries';
 import { GET_USER } from '../queries/userQueries';
+import { useTranslation } from 'react-i18next';
 
 function UpdateAttendanceStatus({ eventId, isAttendee }) {
+  const { t } = useTranslation();
   const [updateEventAttendance] = useMutation(UPDATE_EVENT_ATTENDANCE, {
     refetchQueries: [
       { query: GET_EVENT_DETAILS, variables: { eventId } },
@@ -22,7 +24,7 @@ function UpdateAttendanceStatus({ eventId, isAttendee }) {
           }}
           className="btn btn-danger"
         >
-          Unattend
+          {t('UpdateAttendanceStatus.Unattend')}
         </button>
       ) : (
         <button
@@ -31,7 +33,7 @@ function UpdateAttendanceStatus({ eventId, isAttendee }) {
           }}
           className="btn btn-success"
         >
-          Attend
+          {t('UpdateAttendanceStatus.Attend')}
         </button>
       )}
     </>

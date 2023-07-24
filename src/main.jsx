@@ -7,6 +7,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import './index.css';
+import '../i18n';
 
 import { setContext } from '@apollo/client/link/context';
 import { serverConfig } from './config/server-config.js';
@@ -30,12 +31,12 @@ const cache = new InMemoryCache({
     Query: {
       fields: {
         users: {
-          merge(existing, incoming) {
+          merge(_, incoming) {
             return incoming;
           },
         },
         events: {
-          merge(existing, incoming) {
+          merge(_, incoming) {
             return incoming;
           },
         },

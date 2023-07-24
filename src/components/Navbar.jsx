@@ -1,14 +1,18 @@
 import { Link } from 'react-router-dom';
+import LanguageSwitch from './LanguageSwitch';
+import { useTranslation } from 'react-i18next';
 
 function Navbar() {
+  const { t } = useTranslation();
   return (
     <nav
       className="navbar navbar-expand-lg bg-primary d-flex justify-content-end"
       data-bs-theme="dark"
     >
+      <LanguageSwitch />
       <div className="d-flex justify-content-around container">
         <Link to="/profile" className="btn btn-primary">
-          Profile
+          {t('Navbar.Profile')}
         </Link>
         <button
           onClick={() => {
@@ -17,7 +21,7 @@ function Navbar() {
           }}
           className="btn btn-danger"
         >
-          Log out
+          {t('Navbar.LogOut')}
         </button>
       </div>
     </nav>

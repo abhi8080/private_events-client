@@ -3,8 +3,10 @@ import { useMutation } from '@apollo/client';
 import { FaEdit } from 'react-icons/fa';
 import { UPDATE_EVENT } from '../mutations/eventMutations';
 import { GET_EVENT_DETAILS } from '../queries/eventQueries';
+import { useTranslation } from 'react-i18next';
 
 function EditEvent({ event }) {
+  const { t } = useTranslation();
   const [name, setName] = useState(event.name);
   const [date, setDate] = useState(event.date);
   const [location, setLocation] = useState(event.location);
@@ -31,7 +33,7 @@ function EditEvent({ event }) {
       >
         <div className="d-flex align-items-center">
           <FaEdit className="icon" />
-          <div>Edit</div>
+          <div> {t('EditEvent.Edit')}</div>
         </div>
       </button>
 
@@ -45,7 +47,7 @@ function EditEvent({ event }) {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="editEventModalLabel">
-                Edit Event
+                {t('EditEvent.EditEvent')}
               </h5>
               <button
                 type="button"
@@ -58,7 +60,7 @@ function EditEvent({ event }) {
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label">
-                    Name
+                    {t('CreateEvent.Name')}
                   </label>
                   <input
                     type="text"
@@ -71,7 +73,7 @@ function EditEvent({ event }) {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="date" className="form-label">
-                    Date
+                    {t('EventDetails.Date')}
                   </label>
                   <input
                     type="date"
@@ -84,7 +86,7 @@ function EditEvent({ event }) {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="location" className="form-label">
-                    Location
+                    {t('EventDetails.Location')}
                   </label>
                   <input
                     type="text"
@@ -96,7 +98,7 @@ function EditEvent({ event }) {
                   />
                 </div>
                 <button type="submit" className="btn btn-primary">
-                  Submit
+                  {t('EditEvent.Submit')}
                 </button>
               </form>
             </div>

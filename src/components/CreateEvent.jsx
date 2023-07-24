@@ -1,24 +1,12 @@
 import { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { BsFillCalendarEventFill } from 'react-icons/bs';
 import { GET_EVENTS } from '../queries/eventQueries';
-
-const CREATE_EVENT = gql`
-  mutation CreateEvent($name: String!, $date: String!, $location: String!) {
-    createEvent(name: $name, date: $date, location: $location) {
-      id
-      name
-      date
-      location
-      creator {
-        id
-        username
-      }
-    }
-  }
-`;
+import { useTranslation } from 'react-i18next';
+import { CREATE_EVENT } from '../mutations/eventMutations';
 
 function CreateEvent() {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [location, setLocation] = useState('');
@@ -54,7 +42,7 @@ function CreateEvent() {
       >
         <div className="d-flex align-items-center">
           <BsFillCalendarEventFill className="icon" />
-          <div>Add Event</div>
+          <div>{t('CreateEvent.AddEvent')}</div>
         </div>
       </button>
 
@@ -68,7 +56,7 @@ function CreateEvent() {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="addEventModalLabel">
-                Add Event
+                {t('CreateEvent.AddEvent')}
               </h5>
               <button
                 type="button"
@@ -81,7 +69,7 @@ function CreateEvent() {
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label">
-                    Name
+                    {t('CreateEvent.Name')}
                   </label>
                   <input
                     type="text"
@@ -94,7 +82,7 @@ function CreateEvent() {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="date" className="form-label">
-                    Date
+                    {t('EventDetails.Date')}
                   </label>
                   <input
                     type="date"
@@ -107,7 +95,7 @@ function CreateEvent() {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="location" className="form-label">
-                    Location
+                    {t('EventDetails.Location')}
                   </label>
                   <input
                     type="text"
@@ -119,7 +107,7 @@ function CreateEvent() {
                   />
                 </div>
                 <button type="submit" className="btn btn-primary">
-                  Create
+                  {t('CreateEvent.Create')}
                 </button>
               </form>
             </div>

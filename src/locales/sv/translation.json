@@ -1,0 +1,51 @@
+{
+  "translation": {
+    "Loading": "Laddar...",
+    "Back": "Tillbaka",
+    "Navbar": {
+      "ChooseLanguage": "Välj språk",
+      "Profile": "Profil",
+      "LogOut": "Logga ut"
+    },
+    "EventList": {
+      "EventList": "Händelselista",
+      "UpcomingEvents": "Kommande händelser",
+      "PastEvents": "Tidigare händelser"
+    },
+    "EventDetails": {
+      "EventDetails": "Händelseuppgifter",
+      "Date": "Datum",
+      "Location": "Plats",
+      "Creator": "Skapare",
+      "ViewDetails": "Visa detaljer",
+      "Attendees": "Deltagare"
+    },
+    "CreateEvent": {
+      "AddEvent": "Lägg till händelse",
+      "Name": "Namn",
+      "Create": "Skapa"
+    },
+    "EditEvent": {
+      "Edit": "Redigera",
+      "EditEvent": "Redigera händelse",
+      "Submit": "Bekräfta"
+    },
+    "DeleteEvent": {
+      "DeleteEvent": "Ta bort händelse"
+    },
+    "Profile": {
+      "User": "Användare",
+      "YourEvents": "Dina händelser",
+      "NoCreatedEvents": "Inga skapade händelser",
+      "PastAttendedEvents": "Tidigare deltagande händelser",
+      "NoPastAttendedEvents": "Inga tidigare deltagande händelser",
+      "FutureAttendedEvents": "Framtida deltagande händelser",
+      "NoFutureAttendedEvents": "Inga framtida deltagande händelser"
+    },
+
+    "UpdateAttendanceStatus": {
+      "Unattend": "Avregistrera",
+      "Attend": "Delta"
+    }
+  }
+}
